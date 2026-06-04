@@ -180,6 +180,62 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(47,232,154,0.45); }
 
     @keyframes pulseGlow { from { opacity: 0.5; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+  
+    /* ══════════ RESPONSIVE MOBILE FIX (HP) ══════════ */
+    @media (max-width: 768px) {
+      /* 1. Mengurangi padding luar kotak timeline agar lebih lega */
+      .timeline { 
+        padding: 30px 15px; 
+      }
+      
+      /* 2. Menggeser garis utama (axis) lebih merapat ke kiri */
+      .tl-axis { 
+        left: 18px; 
+      }
+      
+      /* 3. Mengubah layout menjadi atas-bawah dan mengurangi jarak kiri */
+      .tl-row { 
+        flex-direction: column; 
+        gap: 6px; 
+        padding: 0 0 35px 42px; 
+      }
+      
+      /* 4. Menyesuaikan posisi titik bercahaya agar pas dengan garis baru */
+      .tl-dot { 
+        left: -6px; 
+        top: -8px; 
+      }
+      
+      /* 5. Membebaskan batas lebar waktu agar teks utama bisa melebar 100% */
+      .tl-time { 
+        min-width: auto; 
+        font-size: 15px; 
+        margin-bottom: 2px;
+      }
+      
+      /* 6. Penyesuaian ukuran teks agar proporsional di HP */
+      .tl-body h4 {
+        font-size: 15px;
+        line-height: 1.4;
+        margin-bottom: 6px;
+      }
+      .tl-body p {
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      
+      /* Mengatur Card Info lainnya agar tidak sesak */
+      .main-content {
+        padding: 90px 15px 40px 15px;
+      }
+      .card {
+        padding: 25px 20px;
+      }
+      .sec-h2 {
+        font-size: 28px;
+      }
+    }
+  
   </style>
 </head>
 <body>
