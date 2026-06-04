@@ -20,10 +20,11 @@
       --line:      rgba(255,255,255,0.065);
       --jade:      #2fe89a;
       --jade-dim:  #1a7a4e;
-      --jade-glow: rgba(90, 232, 47, 0.15);
+      --jade-glow: rgba(47, 232, 154, 0.15); /* Diperbaiki ke RGB giok asli */
       --gold:      #f0d060;
       --gold-dim:  #a07820;
       --amber:     #f5a830;
+      --sapphire:  #60c0f8;
       --violet:    #c0a8ff;
       --text:      #eef4f0;
       --muted:     rgba(238,244,240,0.52);
@@ -35,7 +36,9 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    
+    /* Scroll-padding agar bagian atas tidak tertutup navbar saat menu diklik */
+    html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: 110px; }
     body { font-family: var(--sans); background: var(--ink); color: var(--text); overflow-x: hidden; line-height: 1.65; }
 
     /* Noise Overlay Background */
@@ -45,10 +48,19 @@
       pointer-events: none; opacity: 0.3;
     }
 
-    /* ══════════ NAVBAR & READ PROGRESS ══════════ */
+    /* ══════════ NAVBAR & READ PROGRESS (GRADASI CAMPURAN) ══════════ */
     #readProgress {
-      position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--jade), var(--gold));
-      width: 0%; z-index: 10001; opacity: 0; transition: opacity 1s var(--ease);
+      position: fixed; top: 0; left: 0; height: 4px;
+      /* Gradasi multi-warna campuran mengalir */
+      background: linear-gradient(90deg, var(--jade), var(--sapphire), var(--violet), var(--gold), var(--amber), var(--jade));
+      background-size: 200% 100%;
+      width: 0%; z-index: 10001; opacity: 0; transition: opacity 1s var(--ease), width 0.1s;
+      box-shadow: 0 0 15px rgba(47,232,154,0.6);
+      animation: progressGlow 3s linear infinite;
+    }
+    @keyframes progressGlow {
+      0% { background-position: 100% 0; }
+      100% { background-position: 0 0; }
     }
     
     #nav {
@@ -74,7 +86,13 @@
     }
     .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(47,232,154,0.4); }
 
-    @media (max-width: 900px) { .nav-menu { display: none; } #nav { padding: 0 20px; } }
+    /* Perbaikan Mobile Nav: Sembunyikan tulisan saja, pertahankan tombol RSVP */
+    @media (max-width: 900px) { 
+      .nav-menu li:not(:last-child) { display: none; } 
+      .nav-menu { gap: 0; }
+      #nav { padding: 0 20px; } 
+      .nav-logo { font-size: 20px; }
+    }
 
     /* ══════════ SCREEN COVER (AMPLOP ELEGAN) ══════════ */
     #screen-cover {
@@ -89,9 +107,11 @@
     .envelope-container::after { content: ''; position: absolute; inset: 0; border-top: 105px solid transparent; border-bottom: 105px solid transparent; border-left: 160px solid rgba(12, 30, 26, 0.95); z-index: 3; }
     .env-right { position: absolute; inset: 0; border-top: 105px solid transparent; border-bottom: 105px solid transparent; border-right: 160px solid rgba(12, 30, 26, 0.95); z-index: 3; }
     .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-top: 110px solid var(--ink3); transform-origin: top; transition: transform 0.6s var(--ease); z-index: 4; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+    
+    /* Mengamankan nama panjang agar tidak menembus kertas amplop */
     .letter { position: absolute; bottom: 5px; left: 15px; width: 290px; height: 190px; background: linear-gradient(145deg, #102621, var(--ink3)); border: 1px solid var(--line); border-radius: 4px; z-index: 2; transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1); padding: 24px 15px; box-sizing: border-box; text-align: center; }
     .letter p { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-    .letter #namaTamu { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--gold); margin: 8px 0; }
+    .letter #namaTamu { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--gold); margin: 8px 0; line-height: 1.2; word-wrap: break-word; }
     .letter .event-mini { font-size: 12px; color: var(--text); font-weight: bold; letter-spacing: 2px; }
 
     /* STATE ANIMASI TRIGGER */
@@ -114,18 +134,19 @@
     .hero-title strong { font-weight: 700; color: var(--jade); }
     .hero-motto { font-size: 10px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 40px; }
 
-    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 35px 25px; margin-bottom: 24px; backdrop-filter: blur(10px); transition: transform 0.3s var(--ease); text-align: left; }
+    /* Perbaikan: Penambahan overflow hidden agar seg-bg tidak bocor */
+    .card { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 35px 30px; margin-bottom: 24px; backdrop-filter: blur(10px); transition: transform 0.3s var(--ease); text-align: left; }
     .card:hover { transform: translateY(-4px); border-color: rgba(47,232,154,0.2); }
     .card h3 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin-bottom: 16px; color: var(--text); letter-spacing: 1px; border-bottom: 1px solid var(--line); padding-bottom: 10px;}
-    .card p { color: var(--muted); font-size: 14.5px; line-height: 1.8; margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: 14.5px; line-height: 1.8; margin-bottom: 10px; z-index: 2; position: relative; }
 
     /* ══════════ EVENT & RUNDOWN SECTION STYLES ══════════ */
     #event { margin-top: 50px; background: linear-gradient(180deg, transparent 0%, var(--ink2) 100%); border-radius: 20px; padding: 40px 20px; border: 1px solid var(--line);}
     .event-top { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: end; margin-bottom: 40px; }
     @media (min-width: 768px) { .event-top { grid-template-columns: 1.5fr 1fr; } }
-    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--jade); margin-bottom: 16px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--jade); margin-bottom: 16px; position: relative; z-index: 2;}
     .chip::before { content: ''; width: 24px; height: 1px; background: linear-gradient(90deg, var(--jade), transparent); }
-    .sec-h2 { font-family: var(--serif); font-size: clamp(32px, 5.5vw, 48px); font-weight: 300; line-height: 1.12; margin-bottom: 18px; }
+    .sec-h2 { position: relative; z-index: 2; font-family: var(--serif); font-size: clamp(32px, 5.5vw, 48px); font-weight: 300; line-height: 1.12; margin-bottom: 18px; }
     .event-desc p { font-size: 14px; color: var(--muted); line-height: 1.9; margin-bottom: 16px; }
     .event-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
     .event-tag { display: flex; align-items: center; gap: 7px; border: 1px solid rgba(240,208,96,.22); background: rgba(240,208,96,.07); color: var(--gold); font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 30px; letter-spacing: .4px; transition: all .25s; }
@@ -183,64 +204,23 @@
   
     /* ══════════ RESPONSIVE MOBILE FIX (HP) ══════════ */
     @media (max-width: 768px) {
-      /* 1. Mengurangi padding luar kotak timeline agar lebih lega */
-      .timeline { 
-        padding: 30px 15px; 
-      }
+      .main-content { padding: 90px 15px 40px 15px; }
+      .card { padding: 25px 20px; }
+      .sec-h2 { font-size: 28px; }
       
-      /* 2. Menggeser garis utama (axis) lebih merapat ke kiri */
-      .tl-axis { 
-        left: 18px; 
-      }
-      
-      /* 3. Mengubah layout menjadi atas-bawah dan mengurangi jarak kiri */
-      .tl-row { 
-        flex-direction: column; 
-        gap: 6px; 
-        padding: 0 0 35px 42px; 
-      }
-      
-      /* 4. Menyesuaikan posisi titik bercahaya agar pas dengan garis baru */
-      .tl-dot { 
-        left: -6px; 
-        top: -8px; 
-      }
-      
-      /* 5. Membebaskan batas lebar waktu agar teks utama bisa melebar 100% */
-      .tl-time { 
-        min-width: auto; 
-        font-size: 15px; 
-        margin-bottom: 2px;
-      }
-      
-      /* 6. Penyesuaian ukuran teks agar proporsional di HP */
-      .tl-body h4 {
-        font-size: 15px;
-        line-height: 1.4;
-        margin-bottom: 6px;
-      }
-      .tl-body p {
-        font-size: 13px;
-        line-height: 1.6;
-      }
-      
-      /* Mengatur Card Info lainnya agar tidak sesak */
-      .main-content {
-        padding: 90px 15px 40px 15px;
-      }
-      .card {
-        padding: 25px 20px;
-      }
-      .sec-h2 {
-        font-size: 28px;
-      }
+      .timeline { padding: 30px 15px; }
+      .tl-axis { left: 24px; } /* Dipertahankan untuk titik center yang presisi */
+      .tl-row { flex-direction: column; gap: 8px; padding: 0 0 40px 60px; }
+      .tl-dot { left: 0; top: -5px; } 
+      .tl-time { min-width: auto; font-size: 16px; margin-bottom: 0; }
+      .tl-body h4 { font-size: 15px; line-height: 1.4; margin-bottom: 6px; }
+      .tl-body p { font-size: 13px; line-height: 1.6; }
     }
-
   </style>
 </head>
 <body>
 
-  <!-- PROGRESS BAR (Merespon Scroll) -->
+  <!-- PROGRESS BAR (Merespon Scroll dengan Gradasi Mengalir) -->
   <div id="readProgress"></div>
 
   <!-- NAVBAR MENU -->
@@ -284,19 +264,21 @@
       <div class="hero-motto">&nbsp;·&nbsp; Uniting Hearts &nbsp;·&nbsp; Weaving History &nbsp;·&nbsp;</div>
     </div>
 
-    <div class="card">
-        <div class="seg-bg" style="background: linear-gradient(160deg, #00925542, var(--ink2), #85680065);"></div>
-            <div class="seg-glow" style="background: var(--gold); opacity: 0.1;"></div>
-            <div class="seg-inner">
-        <div class="chip">Pembukaan</div>
-     <h2 class="sec-h2">Undangan<br><em style="font-family:var(--serif);font-style:italic;color:var(--gold);font-size:100%;font-weight:300">Lailatul Wada' 2026</em></h2>
-      <p><strong>Assalamu'alaikum Warahmatullahi Wabarakatuh</strong></p>
-      <p>Dengan penuh rasa syukur kepada Allah SWT, kami mengundang Ustadz untuk hadir dalam acara terakhir dari santri kelas 9 dan 12 SMP/SMA PPTQ Ibnu Abbas Klaten, yang akan diselenggarakan pada:</p>
-      <p><strong>Hari/Tanggal:</strong> Kamis, 11 Juni 2026<br><strong>Waktu:</strong> 20.00 WIB s.d Selesai<br><strong>Tempat:</strong> Komplek PPTQ Ibnu Abbas, Klaten</p>
-      <p>Acara ini merupakan momen istimewa untuk merayakan perjalanan dan prestasi para santri, serta mempererat tali silaturahmi antara keluarga besar PPTQ Ibnu Abbas. Kami berharap kehadiran Ustadz dapat memberikan dukungan dan semangat bagi para santri yang akan melangkah ke fase baru dalam kehidupan mereka.</p>
-    </div></div>
-
+    <!-- Perbaikan: Elemen ini sekarang berada di dalam .wrap agar lebarnya tidak membentang penuh di laptop -->
     <div class="wrap">
+      <div class="card">
+          <div class="seg-bg" style="background: linear-gradient(160deg, #00925542, var(--ink2), #85680065);"></div>
+          <div class="seg-glow" style="background: var(--gold); opacity: 0.1;"></div>
+          <div class="seg-inner" style="padding: 0; position: relative; z-index: 2;">
+            <div class="chip">Pembukaan</div>
+            <h2 class="sec-h2">Undangan<br><em style="font-family:var(--serif);font-style:italic;color:var(--gold);font-size:100%;font-weight:300">Lailatul Wada' 2026</em></h2>
+            <p><strong>Assalamu'alaikum Warahmatullahi Wabarakatuh</strong></p>
+            <p>Dengan penuh rasa syukur kepada Allah SWT, kami mengundang Ustadz untuk hadir dalam acara terakhir dari santri kelas 9 dan 12 SMP/SMA PPTQ Ibnu Abbas Klaten, yang akan diselenggarakan pada:</p>
+            <p><strong>Hari/Tanggal:</strong> Kamis, 11 Juni 2026<br><strong>Waktu:</strong> 20.00 WIB s.d Selesai<br><strong>Tempat:</strong> Komplek PPTQ Ibnu Abbas, Klaten</p>
+            <p>Acara ini merupakan momen istimewa untuk merayakan perjalanan dan prestasi para santri, serta mempererat tali silaturahmi antara keluarga besar PPTQ Ibnu Abbas. Kami berharap kehadiran Ustadz dapat memberikan dukungan dan semangat bagi para santri yang akan melangkah ke fase baru dalam kehidupan mereka.</p>
+          </div>
+      </div>
+
       <!-- ═══════════ SECTION: EVENT & RUNDOWN ═══════════ -->
       <section id="event">
         <div class="event-top">
@@ -438,11 +420,11 @@
       </section>
 
       <!-- KARTU RSVP / GOOGLE SHEETS -->
-      <div class="card" id="rsvp" style="text-align: center; margin-top: 40px;">
-        <h3>Konfirmasi Kehadiran</h3>
+      <div class="card" id="rsvp" style="text-align: center; margin-top: 40px; padding: 45px 30px;">
+        <h3 style="font-size: 28px; margin-bottom: 20px;">Konfirmasi Kehadiran</h3>
         <p>Besar harapan kami Ustadz berkenan hadir dalam acara ini. Mohon kesediaan Ustadz untuk memberikan konfirmasi kehadiran, guna mempermudah kami dalam memfasilitasi kapasitas tempat duduk dan hidangan konsumsi yang terbaik.</p>
         <p>Atas perhatian dan kelonggaran waktu Ustadz, kami mengucapkan terima kasih. Jazakumullah khairan katsiran.</p>
-        <a href="LINK_GOOGLE_FORM_ATAU_SHEET_DI_SINI" target="_blank" class="btn-primary">Konfirmasi Kehadiran</a>
+        <a href="LINK_GOOGLE_FORM_ATAU_SHEET_DI_SINI" target="_blank" class="btn-primary" style="max-width: 350px;">Konfirmasi Kehadiran</a>
       </div>  
     </div>
   </div>
