@@ -108,11 +108,29 @@
     .env-right { position: absolute; inset: 0; border-top: 105px solid transparent; border-bottom: 105px solid transparent; border-right: 160px solid rgba(12, 30, 26, 0.95); z-index: 3; }
     .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 160px solid transparent; border-right: 160px solid transparent; border-top: 110px solid var(--ink3); transform-origin: top; transition: transform 0.6s var(--ease); z-index: 4; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
     
-    /* Mengamankan nama panjang agar tidak menembus kertas amplop */
-    .letter { position: absolute; bottom: 5px; left: 15px; width: 290px; height: 190px; background: linear-gradient(145deg, #102621, var(--ink3)); border: 1px solid var(--line); border-radius: 4px; z-index: 2; transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1); padding: 24px 15px; box-sizing: border-box; text-align: center; }
-    .letter p { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-    .letter #namaTamu { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--gold); margin: 8px 0; line-height: 1.2; word-wrap: break-word; }
-    .letter .event-mini { font-size: 12px; color: var(--text); font-weight: bold; letter-spacing: 2px; }
+    /* ══════════ KERTAS SURAT DALAM AMPLOP (UPGRADE PREMIUM) ══════════ */
+    .letter { 
+      position: absolute; bottom: 5px; left: 15px; width: 290px; height: 190px; 
+      background: linear-gradient(145deg, #091814 0%, #102621 100%); 
+      border: 1px solid rgba(240, 208, 96, 0.4); /* Bingkai luar emas redup */
+      border-radius: 6px; z-index: 2; 
+      transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1); 
+      padding: 6px; box-sizing: border-box; text-align: center; 
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+    }
+    
+    /* Bingkai putus-putus di dalam kertas */
+    .letter-inner {
+      border: 1px dashed rgba(240, 208, 96, 0.25);
+      height: 100%; border-radius: 4px; padding: 15px 10px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    
+    .letter-header { font-size: 10px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+    .kepada { font-size: 12px; color: var(--muted); margin-bottom: 4px; font-style: italic; font-family: var(--serif); }
+    .letter #namaTamu { font-family: var(--serif); font-size: 24px; font-weight: 700; color: #fff; margin: 0 0 10px 0; line-height: 1.1; word-wrap: break-word; text-shadow: 0 2px 15px rgba(240,208,96,0.4); }
+    .ornament { font-size: 10px; color: var(--jade); margin-bottom: 12px; opacity: 0.5; letter-spacing: 2px;}
+    .event-mini { font-size: 11.5px; color: rgba(255,255,255,0.7); font-weight: 600; letter-spacing: 2px; }
 
     /* STATE ANIMASI TRIGGER */
     .open .flap { transform: rotateX(180deg); z-index: 1; }
@@ -238,17 +256,24 @@
     <source src="PASTIKAN_DIRECT_LINK_AUDIO_DROPBOX_DI_SINI" type="audio/mp3">
   </audio>
 
-  <!-- COVER AMPLOP INTERAKTIF -->
+ <!-- COVER AMPLOP INTERAKTIF -->
   <div id="screen-cover">
     <div class="tap-instruction">✉ Klik Amplop Untuk Membuka</div>
     <div class="envelope-container" onclick="prosesBukaUndangan(this)">
       <div class="flap"></div>
       <div class="env-right"></div>
+      
+      <!-- KERTAS SURAT YANG DIPERBARUI -->
       <div class="letter">
-        <p>Undangan Eksklusif</p>
-        <div id="namaTamu">Memuat Nama...</div>
-        <div class="event-mini">LAILATUL WADA' 2026</div>
+        <div class="letter-inner">
+          <div class="letter-header">Undangan Eksklusif</div>
+          <div class="kepada">Kepada Yth.</div>
+          <div id="namaTamu">Memuat Nama...</div>
+          <div class="ornament">✧ ──────── ✧ ──────── ✧</div>
+          <div class="event-mini">LAILATUL WADA' 2026</div>
+        </div>
       </div>
+      
     </div>
   </div>
 
