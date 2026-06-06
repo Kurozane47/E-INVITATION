@@ -274,7 +274,7 @@
             <h2 class="sec-h2">Undangan<br><em style="font-family:var(--serif);font-style:italic;color:var(--gold);font-size:100%;font-weight:300">Lailatul Wada' 2026</em></h2>
             <p><strong>Assalamu'alaikum Warahmatullahi Wabarakatuh</strong></p>
             <p>Dengan penuh rasa syukur kepada Allah SWT, kami mengundang Ustadz untuk hadir dalam acara terakhir dari santri kelas 9 dan 12 SMP/SMA PPTQ Ibnu Abbas Klaten, yang akan diselenggarakan pada:</p>
-            <p><strong>Hari/Tanggal:</strong> Kamis, 11 Juni 2026<br><strong>Waktu:</strong> 20.00 WIB s.d Selesai<br><strong>Tempat:</strong> Komplek PPTQ Ibnu Abbas, Klaten</p>
+            <p><strong>Hari/Tanggal:</strong> Kamis, 11 Juni 2026<br><strong>Waktu:</strong> 20.00 WIB s.d Selesai<br><strong>Tempat:</strong>PPTQ Ibnu Abbas Klaten (Kampus Putra)</p>
             <p>Acara ini merupakan momen istimewa untuk merayakan perjalanan dan prestasi para santri, serta mempererat tali silaturahmi antara keluarga besar PPTQ Ibnu Abbas. Kami berharap kehadiran Ustadz dapat memberikan dukungan dan semangat bagi para santri yang akan melangkah ke fase baru dalam kehidupan mereka.</p>
           </div>
       </div>
@@ -291,7 +291,7 @@
             </div>
             <div class="event-tags">
               <div class="event-tag">📅 11 Juni 2026</div>
-              <div class="event-tag">🏛️ Komplek PPTQ Ibnu Abbas, Klaten</div>
+              <div class="event-tag">🏛️ PPTQ Ibnu Abbas Klaten (Kampus Putra)</div>
               <div class="event-tag">🎓 Kelas 9 & 12 SMP/SMA</div>
               <div class="event-tag">🎬 Live Streaming</div>
             </div>
@@ -435,7 +435,8 @@
       const urlParams = new URLSearchParams(window.location.search);
       const nama = urlParams.get('to');
       if (nama) {
-        document.getElementById('namaTamu').innerText = decodeURIComponent(nama);
+        // Tambahkan .replace(/\+/g, ' ') agar tanda + diubah jadi spasi otomatis
+        document.getElementById('namaTamu').innerText = decodeURIComponent(nama.replace(/\+/g, ' '));
       } else {
         document.getElementById('namaTamu').innerText = "Tamu Undangan";
       }
