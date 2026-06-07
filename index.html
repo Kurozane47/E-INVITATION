@@ -84,33 +84,7 @@
       .cursor-dot, .cursor-ring { display: none !important; }
       * { cursor: auto !important; }
     }
-
-    /* ══════════ WATERMARK VERTIKAL KIRI ══════════ */
-    .vertical-decor {
-      position: fixed; left: 20px; top: 0; bottom: 0; width: 60px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      z-index: -1; opacity: 0; transition: opacity 2s var(--ease);
-    }
-    .vertical-decor.visible { opacity: 1; }
-    .vertical-decor span {
-      writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
-      font-family: var(--serif); font-size: 42px; font-weight: 700;
-      background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      opacity: 0.08; letter-spacing: 15px; text-transform: uppercase; white-space: nowrap;
-    }
-    @media (max-width: 1024px) { .vertical-decor { display: none; } }
-
-    /* ══════════ READ PROGRESS BAR ══════════ */
-    #readProgress {
-      position: fixed; top: 0; left: 0; height: 5px;
-      background: linear-gradient(90deg, var(--brand-blue), var(--brand-orange), var(--brand-blue));
-      background-size: 200% 100%; width: 0%; z-index: 10001; opacity: 0; 
-      transition: opacity 1s var(--ease), width 0.15s ease-out;
-      animation: progressGradient 3s linear infinite;
-    }
-    @keyframes progressGradient { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
-
-    /* ══════════ NAVBAR ══════════ */
+/* ══════════ NAVBAR ══════════ */
     #nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 10000;
       display: flex; justify-content: space-between; align-items: center;
@@ -127,22 +101,32 @@
     .nav-logo span { color: var(--text-orange); }
     
     .nav-menu { display: flex; gap: 35px; list-style: none; align-items: center; }
+    
+    /* Link Navbar Biasa */
     .nav-menu a { color: var(--text-blue); text-decoration: none; font-size: 14px; font-weight: 700; transition: 0.3s; position: relative; padding-bottom: 4px; }
     .nav-menu a:hover { color: var(--text-orange); }
     .nav-menu a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--brand-orange); transition: 0.3s; }
     .nav-menu a:hover::after { width: 100%; }
     
-    .nav-cta {
-      background: var(--brand-orange); color: #fff !important;
-      padding: 12px 28px; border-radius: 40px; text-decoration: none; font-weight: 700; font-size: 13px;
-      transition: all 0.4s var(--ease-bouncy); box-shadow: 0 8px 20px var(--glow-orange); border: 2px solid transparent;
+    /* Tombol CTA (Dinaikkan prioritasnya dengan memanggil .nav-menu a.nav-cta) */
+    .nav-menu a.nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand-orange); 
+      color: #fff !important;
+      padding: 12px 28px; /* Jarak atas-bawah dan kiri-kanan sekarang mutlak presisi */
+      border-radius: 40px; 
+      font-weight: 700; 
+      font-size: 13px;
+      line-height: 1; /* Memastikan font tidak memiliki spasi kosong bawaan */
+      transition: all 0.4s var(--ease-bouncy); 
+      box-shadow: 0 8px 20px var(--glow-orange); 
+      border: 2px solid transparent;
     }
-    .nav-cta:hover { background: var(--brand-blue); transform: translateY(-3px); box-shadow: 0 10px 25px var(--glow-blue); color: #fff !important;}
-
-    @media (max-width: 900px) { 
-      .nav-menu li:not(:last-child) { display: none; } 
-      #nav { padding: 0 25px; } .nav-logo { font-size: 22px; }
-    }
+    .nav-menu a.nav-cta::after { display: none !important; }
+    .nav-menu a.nav-cta:hover { background: var(--brand-blue); transform: translateY(-3px); box-shadow: 0 10px 25px var(--glow-blue); color: #fff !important;}
+    
 
     /* ══════════ SCREEN COVER (AMPLOP FISIK ELEGAN - ANIMASI 3D) ══════════ */
     #screen-cover {
