@@ -182,7 +182,7 @@
     .open.envelope-wrapper { transform: translateY(30px) scale(0.95); transition-delay: 0.2s;}
     .fade-out-cover { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    /* ══════════ CONTENT UTAMA WEBSITE ══════════ */
+/* ══════════ CONTENT UTAMA WEBSITE ══════════ */
     .main-content { opacity: 0; transition: opacity 1.5s var(--ease); padding: 130px 24px 80px 24px; position: relative; }
     .wrap { max-width: 850px; margin: 0 auto; }
     .text-center { text-align: center; }
@@ -193,7 +193,8 @@
     @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
 
     .hero-box { margin-bottom: 60px; }
-    .hero-arabic { font-family: var(--arabic); font-size: 85px; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 10px; filter: drop-shadow(2px 4px 10px var(--glow-orange)); }
+    /* FIX: Penambahan background-clip dan color standard */
+    .hero-arabic { font-family: var(--arabic); font-size: 85px; background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; line-height: 1; margin-bottom: 10px; filter: drop-shadow(2px 4px 10px var(--glow-orange)); }
     .hero-title { font-family: var(--serif); font-size: 46px; font-weight: 400; letter-spacing: 2px; color: var(--text-blue); margin-bottom: 15px; text-transform: uppercase; }
     .hero-title strong { font-weight: 700; color: var(--brand-orange); }
     .hero-motto { font-size: 12px; font-weight: 700; letter-spacing: 5px; color: var(--brand-blue-alt); text-transform: uppercase; }
@@ -236,7 +237,8 @@
     .cd-label { font-size: 12px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--brand-blue); display: block; margin-bottom: 20px; }
     .cd-nums { display: flex; align-items: center; justify-content: center; gap: 15px; }
     .cd-block { width: 70px; }
-    .cd-n { font-family: var(--serif); font-size: 46px; font-weight: 700; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; line-height: 1; }
+    /* FIX: Penambahan background-clip dan color standard */
+    .cd-n { font-family: var(--serif); font-size: 46px; font-weight: 700; background: var(--grad-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; display: block; line-height: 1; }
     .cd-u { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; }
     .cd-sep { font-size: 30px; font-weight: bold; color: var(--brand-blue); padding-bottom: 15px; }
 
@@ -264,7 +266,6 @@
     .seg-title { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--text-blue); margin-bottom: 12px; }
     .seg-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; flex: 1; }
     .seg-foot { margin-top: 25px; padding-top: 15px; border-top: 1px solid var(--line); font-size: 12px; font-weight: 700; color: var(--brand-blue); }
-
     /* ══════════ TIMELINE RUNDOWN (MATH ABSOLUTE CENTER) ══════════ */
     .timeline { padding: 50px 40px; margin-top: 40px; }
     .timeline-title { font-family: var(--serif); font-size: 36px; font-weight: 700; color: var(--text-blue); margin-bottom: 10px; text-transform: uppercase; }
@@ -372,6 +373,24 @@
       .tl-axis { left: 24px; } 
       .tl-dot { left: 24px; } 
       .tl-row { padding: 0 0 40px 55px; }
+
+      /* ══════════ WATERMARK VERTIKAL KIRI ══════════ */
+    .vertical-decor {
+      position: fixed; left: 10px; top: 50%;
+      transform: translateY(-50%); /* Mengunci posisi persis di tengah */
+      z-index: -1; opacity: 0; transition: opacity 2s var(--ease);
+      pointer-events: none; /* Mencegah teks terblok atau menutupi klik */
+    }
+    .vertical-decor.visible { opacity: 1; }
+    .vertical-decor span {
+      display: block;
+      transform: rotate(-90deg); /* Rotasi absolut yang bebas bug di semua browser */
+      transform-origin: center center;
+      font-family: var(--serif); font-size: 42px; font-weight: 700;
+      color: rgba(28, 56, 121, 0.05); /* Warna solid transparan menggantikan gradasi */
+      letter-spacing: 15px; text-transform: uppercase; white-space: nowrap;
+    }
+    @media (max-width: 1024px) { .vertical-decor { display: none; } }
     }
   </style>
 </head>
