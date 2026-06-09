@@ -84,49 +84,78 @@
       .cursor-dot, .cursor-ring { display: none !important; }
       * { cursor: auto !important; }
     }
+/* ══════════ READ PROGRESS BAR ══════════ */
+    #readProgress {
+      position: fixed; top: 0; left: 0; height: 4px;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-orange), var(--brand-blue));
+      background-size: 200% 100%; width: 0%; z-index: 10001; opacity: 0; 
+      transition: opacity 1s var(--ease); /* Width transisi dihapus agar JS lebih smooth di iOS */
+      animation: progressGradient 3s linear infinite;
+      -webkit-transform: translateZ(0); /* FIX: Hardware acceleration agar muncul di iPhone */
+      transform: translateZ(0);
+    }
+    @keyframes progressGradient { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
 /* ══════════ NAVBAR ══════════ */
     #nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 10000;
       display: flex; justify-content: space-between; align-items: center;
       padding: 0 50px; height: 80px; transition: all 0.5s var(--ease);
       opacity: 0; visibility: hidden; transform: translateY(-20px); border-bottom: 1px solid transparent;
+      box-sizing: border-box; /* Mencegah padding merusak lebar */
     }
     #nav.visible { opacity: 1; visibility: visible; transform: translateY(0); }
     #nav.scrolled { 
-      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); 
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
       border-bottom: 1px solid var(--line); box-shadow: 0 10px 30px rgba(28, 56, 121, 0.05);
     }
     
-    .nav-logo { font-family: var(--serif); font-size: 26px; font-weight: 700; color: var(--text-blue); text-decoration: none; }
+    /* Logo dikunci agar tidak bisa patah ke bawah */
+    .nav-logo { font-family: var(--serif); font-size: 26px; font-weight: 700; color: var(--text-blue); text-decoration: none; white-space: nowrap !important; flex-shrink: 0; }
     .nav-logo span { color: var(--text-orange); }
     
-    .nav-menu { display: flex; gap: 35px; list-style: none; align-items: center; }
-    
-    /* Link Navbar Biasa */
-    .nav-menu a { color: var(--text-blue); text-decoration: none; font-size: 14px; font-weight: 700; transition: 0.3s; position: relative; padding-bottom: 4px; }
+    .nav-menu { display: flex; gap: 35px; list-style: none; align-items: center; margin: 0; padding: 0; }
+    .nav-menu a { color: var(--text-blue); text-decoration: none; font-size: 14px; font-weight: 700; transition: 0.3s; position: relative; padding-bottom: 4px; white-space: nowrap; }
     .nav-menu a:hover { color: var(--text-orange); }
     .nav-menu a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--brand-orange); transition: 0.3s; }
     .nav-menu a:hover::after { width: 100%; }
     
-    /* Tombol CTA (Dinaikkan prioritasnya dengan memanggil .nav-menu a.nav-cta) */
+    /* Tombol CTA */
     .nav-menu a.nav-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--brand-orange); 
-      color: #fff !important;
-      padding: 12px 28px; /* Jarak atas-bawah dan kiri-kanan sekarang mutlak presisi */
-      border-radius: 40px; 
-      font-weight: 700; 
-      font-size: 13px;
-      line-height: 1; /* Memastikan font tidak memiliki spasi kosong bawaan */
-      transition: all 0.4s var(--ease-bouncy); 
-      box-shadow: 0 8px 20px var(--glow-orange); 
-      border: 2px solid transparent;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--brand-orange); color: #fff !important;
+      padding: 12px 28px; border-radius: 40px; font-weight: 700; font-size: 13px;
+      line-height: 1; transition: all 0.4s var(--ease-bouncy); 
+      box-shadow: 0 8px 20px var(--glow-orange); border: 2px solid transparent;
+      white-space: nowrap !important; flex-shrink: 0;
     }
     .nav-menu a.nav-cta::after { display: none !important; }
-    .nav-menu a.nav-cta:hover { background: var(--brand-blue); transform: translateY(-3px); box-shadow: 0 10px 25px var(--glow-blue); color: #fff !important;}
-    
+    .nav-menu a.nav-cta:hover { background: var(--brand-blue); transform: translateY(-3px); box-shadow: 0 10px 25px var(--glow-blue); }
+
+    /* =========================================================
+       PERBAIKAN MUTLAK LAYAR HP (SAMSUNG, IPHONE, DLL)
+       ========================================================= */
+    @media (max-width: 900px) { 
+      #nav { padding: 0 15px; height: 70px; } 
+      .nav-logo { font-size: 20px; }
+      .nav-menu { gap: 10px; }
+      
+      /* HILANGKAN PAKSA TEKS MENU KE-1 & KE-2 AGAR TIDAK MENUMPUK DI HP */
+      .nav-menu li:nth-child(1),
+      .nav-menu li:nth-child(2) { 
+        display: none !important; 
+      } 
+      
+      /* Sesuaikan ukuran tombol kehadiran agar pas di pojok kanan HP */
+      .nav-menu a.nav-cta { padding: 10px 18px; font-size: 12px; }
+    }
+
+    /* Penyesuaian ekstra untuk HP layar sangat kecil (misal: iPhone SE / Android kecil) */
+    @media (max-width: 400px) {
+      .nav-logo { font-size: 17px; }
+      .nav-menu a.nav-cta { padding: 8px 14px; font-size: 11px; }
+    }
 
     /* ══════════ SCREEN COVER (AMPLOP FISIK ELEGAN - ANIMASI 3D) ══════════ */
     #screen-cover {
